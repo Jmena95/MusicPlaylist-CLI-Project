@@ -1,36 +1,30 @@
-require_relative 'song'
 
 class Playlist
-  attr_accessor :songs
-
   def initialize
     @songs = []
-    puts "Welcome to My Playlist"
   end
 
-  def run
-    loop do
-      puts 'Please Choose an Option'
-      puts '1. Add a song to the playlist'
-      puts '2. Removes a song from the plalylist'
-      puts '3. View playlist'
-      puts '4. Exit'
-      
-      choice = gets.chomp.to_i
+  def add_song(song)
+    @songs << song
+    puts "'#{song.title}' by #{song.artist} has been added to your playlist."
+  end
 
-      case choice
-      when 1
-        add_song
-      when 2 
-        remove_song
-      when 3
-        view
-      when 4
-        puts 'Goodbye!'
-      end
+  def remove_song(title)
+    song = @songs.find { |s| s.title.downcase == title.downcase }
+    if song
+      @songs.delete(song)
+      puts "'#{song.title}' by #{song.artist} has been removed from your playlist."
+    else
+      puts "Song not found!"
     end
- end
+  end
 
- def add_song (song)
-@songs << song
-puts "#{song.get
+  def display_playlist
+    if @songs.empty?
+      puts "Your playlist is empty."
+    else
+      puts "Your Playlist:"
+      @songs.each { |song| puts "- #{song.title} by #{song.artist}" }
+    end
+  end
+end
